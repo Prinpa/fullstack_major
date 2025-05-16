@@ -18,6 +18,13 @@
     "node": ">=18"
   },
   "workspaces": {
-    "packages": ["apps/*", "packages/*"]
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "next": "^15.3.0"
   }
 }

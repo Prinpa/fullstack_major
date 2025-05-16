@@ -6,10 +6,9 @@ export async function AppLayout({
 }: PropsWithChildren<{ query?: string }>) {
   return (
     <>
-    <div> herer</div>
+    <div> Top nav</div>
+    <div>filter</div>
       {children}
-    <div> herer</div>
-
     </>
   );
 }
