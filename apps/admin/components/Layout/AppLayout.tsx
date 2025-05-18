@@ -8,7 +8,9 @@ export async function AppLayout({
   return (
     <>
     <TopNav/>
+    <hr />
       {children}
+
     </>
   );
 }

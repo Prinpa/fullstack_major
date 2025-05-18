@@ -19,9 +19,23 @@ model products {
   content String
   description String
   imageUrl  String
-  date  DateTime @default(now())
+  listedDate  DateTime @default(now())
+  soldDate  DateTime?
+  price  Float
+  quantity  Int
   category  String
+  sold  Boolean  @default(false)
   active  Boolean  @default(true)
+}
+
+// user model contain id, first name, last name, email, password
+model user {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String   @unique
+  password  String
+  role     String   @default("user")
 }
 
 // and a whole lot for auth

@@ -1,15 +1,16 @@
 import { AppLayout } from "components/Layout/AppLayout";
 import { getProducts } from "components/productFunctions";
 import { ProductList } from "components/Products/ProductList";
+import Login from "components/Auth/Login";
 
 
 export default async function Home() {
-  const products = await getProducts();
+
   
   return (
    <AppLayout>
-     <ProductList products={products}></ProductList>
-     <div>THIS (^) IS THE PAGE CONTENT</div>
+     <div>THIS is the signin page</div>
+     <Login/>
    </AppLayout>
   );
 }

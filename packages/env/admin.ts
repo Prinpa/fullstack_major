@@ -1,14 +1,6 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
-const getEnvVar = (key: string) => {
-  if (typeof process !== 'undefined' && process.env) {
-    return process.env[key];
-  }
-  // For browser environment, you could add fallback values or handle differently
-  return undefined;
-};
-
 export const env = createEnv({
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
@@ -16,7 +8,7 @@ export const env = createEnv({
    */
   server: {
     JWT_SECRET: z.string(),
-
+    //E2E: z.string(),
   },
 
   /**
@@ -33,13 +25,14 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    //E2E: process.env.E2E,
     JWT_SECRET: process.env.JWT_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
    * useful for Docker builds.
    */
-  skipValidation: !!getEnvVar('SKIP_ENV_VALIDATION'),
+  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
   /**
    * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
    * `SOME_VAR=''` will throw an error.

@@ -13,7 +13,7 @@ export async function ProductList({
       Listing every product V
       {products.map((product: any) => (
         <div key={product.id}>
-          <h1><Link href={`/product/${product.id}`}>{product.title}</Link></h1>
+          <h1><Link href={`/update-product/${product.id}`}>{product.title}</Link></h1>
           
           <p>{product.content}</p>
         </div>

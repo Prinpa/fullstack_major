@@ -14,6 +14,8 @@
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",
     "@tailwindcss/postcss": "^4.1.5",
+    "@types/jsonwebtoken": "^9.0.9",
+    "jsonwebtoken": "^9.0.2",
     "next": "^15.3.0",
     "postcss": "^8.5.3",
     "react": "^19.1.0",
@@ -21,8 +23,10 @@
     "tailwindcss": "^4.1.5"
   },
   "devDependencies": {
+    "@repo/env": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^22.15.3",
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.1",
