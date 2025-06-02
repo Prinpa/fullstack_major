@@ -5,14 +5,11 @@ import { Product } from "types"
 export async function GET(request: NextRequest) {
   try {
     const prisma = createClient();
-    const products = await prisma.products.findMany();
-
-    // if (!products.length) {
-    //   return NextResponse.json(
-    //     { message: "No products found" },
-    //     { status: 404 }
-    //   );
-    // }
+    const products = await prisma.products.findMany({
+      where: {
+        deletedAt: null
+      }
+    });
 
     return NextResponse.json(
       { data: products, message: "Products retrieved successfully" },

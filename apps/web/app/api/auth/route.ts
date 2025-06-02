@@ -90,7 +90,10 @@ export async function POST(request: Request) {
 
         response.cookies.set("auth_token", token, {
             httpOnly: true,
+            secure: false, // Set to false for local development
+            sameSite: 'lax',
             path: "/",
+            maxAge: 15 * 60, // 15 minutes in seconds
         });
         return response;
     } catch (error) {

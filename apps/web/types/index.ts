@@ -25,3 +25,10 @@ export type LoginUserData = {
   email: string;
   password: string;
 }
+
+export type CartItem = {
+  id: number;
+  productId: number;
+  userId: string;
+  quantity: number;
+}

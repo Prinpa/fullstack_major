@@ -30,3 +30,25 @@ export async function addProduct(product: Product) {
   const data = await response.json();
   return data;
 }
+
+// update product
+export async function updateProduct(product: Product) {
+  const response = await fetch(`http://localhost:3001/api/products/${product.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ productHolder: product }),
+  });
+  const data = await response.json();
+  return data;
+}
+
+// soft delete product
+export async function deleteProduct(id: number) {
+  const response = await fetch(`http://localhost:3001/api/products/${id}`, {
+    method: 'DELETE',
+  });
+  const data = await response.json();
+  return data;
+}

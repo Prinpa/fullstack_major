@@ -30,3 +30,60 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     );
   }
 }
+
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const { id } = params;
+    const body = await request.json();
+    const productHolder = body.productHolder;
+
+    if (!productHolder) {
+      return NextResponse.json(
+        { message: "Product data is required" },
+        { status: 400 }
+      );
+    }
+
+    const product = await prisma.products.update({
+      where: { id: Number(id) },
+      data: productHolder,
+    });
+
+    return NextResponse.json(
+      { data: product, message: "Product updated successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Failed to update product", error: error instanceof Error ? error.message : "Unknown error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const { id } = params;
+    const product = await prisma.products.update({
+      where: { id: Number(id) },
+      data: { deletedAt: new Date() },
+    });
+
+    if (!product) {
+      return NextResponse.json(
+        { message: "Product not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { data: product, message: "Product soft deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Failed to soft delete product", error: error instanceof Error ? error.message : "Unknown error" },
+      { status: 500 }
+    );
+  }
+}

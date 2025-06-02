@@ -5,8 +5,11 @@ import { Product } from "types";
 export async function GET(request: NextRequest) {
     try {
         const prisma = createClient();
-        const products = await prisma.products.findMany();
-
+        const products = await prisma.products.findMany({
+            where: {
+              deletedAt: null
+            }
+          });
         // if (!products.length) {
         //   return NextResponse.json(
         //     { message: "No products found" },
@@ -124,6 +127,41 @@ export async function PUT(request: NextRequest) {
         return NextResponse.json(
             {
                 message: "Failed to update product",
+                error: error instanceof Error ? error.message : "Unknown error",
+            },
+            { status: 500 }
+        );
+    }
+}
+
+// delete product
+export async function DELETE(request: NextRequest) {
+    try {
+        const prisma = createClient();
+        const body = await request.json();
+        const { id } = body;
+
+        if (!id) {
+            return NextResponse.json(
+                { message: "Missing product ID" },
+                { status: 400 }
+            );
+        }
+
+        const product = await prisma.products.delete({
+            where: {
+                id: id,
+            },
+        });
+
+        return NextResponse.json(
+            { data: product, message: "Product deleted successfully" },
+            { status: 200 }
+        );
+    } catch (error) {
+        return NextResponse.json(
+            {
+                message: "Failed to delete product",
                 error: error instanceof Error ? error.message : "Unknown error",
             },
             { status: 500 }

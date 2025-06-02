@@ -1,7 +1,8 @@
 "use client"
 import { Product } from "types";
 import { useState } from "react";
-import { addProduct } from "components/productFunctions";
+import { addProduct, updateProduct } from "components/productFunctions";
+import DeleteProductButton from "components/Products/DeleteProductButton";
 
 export function AddProductForm({ product }: { product?: Product }) {
   
@@ -30,7 +31,11 @@ export function AddProductForm({ product }: { product?: Product }) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addProduct(formState)
+    if (product?.id) {
+      updateProduct(formState); // You need to implement this function
+    } else {
+      addProduct(formState);
+    }
     // TODO: Add your submit logic here
   };
 
@@ -156,6 +161,7 @@ export function AddProductForm({ product }: { product?: Product }) {
       >
         Submit
       </button>
+      {product?.id && <DeleteProductButton id={product.id} />}
     </form>
   );
 }

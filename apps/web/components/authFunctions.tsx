@@ -34,5 +34,7 @@ export async function logoutUser() {
     },
   });
   const data = await response.json();
+  window.location.href = '/';
+  console.log("logouted out");
   return data;
 }

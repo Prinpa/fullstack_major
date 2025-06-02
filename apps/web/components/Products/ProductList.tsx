@@ -1,4 +1,3 @@
-import { getProducts } from "../productFunctions"
 import Link from "next/link";
 import { Product } from "types";
 
@@ -7,7 +6,6 @@ export async function ProductList({
 }: {
   products: Product[],
 }) {
-  // TODO UPDATE TYPES
   return (
     <div>
       Listing every product V

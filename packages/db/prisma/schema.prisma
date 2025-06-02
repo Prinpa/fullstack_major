@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:../dev.db" 
+  url      = env("DATABASE_URL") 
 }
 
 model products {
@@ -26,6 +26,7 @@ model products {
   category  String
   sold  Boolean  @default(false)
   active  Boolean  @default(true)
+  deletedAt DateTime?
 }
 
 // user model contain id, first name, last name, email, password
@@ -38,4 +39,10 @@ model user {
   role     String   @default("user")
 }
 
-// and a whole lot for auth
+//cart model contain id, userId, productId, quantity
+model cart {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  productId Int
+  quantity  Int
+}
