@@ -1,18 +1,22 @@
 import { AppLayout } from "components/Layout/AppLayout";
 import { getCartByUserId } from "components/cartFunctions";
 import { ProductList } from "components/Products/ProductList";
-import { getUserId } from "utils/auth";
+import { getUserData } from "components/authFunctions";
 import { CartList } from "components/Cart/CartList";
+import { cookies } from 'next/headers';
 
 
 
 export default async function page() {
-  const userId = await getUserId();
+
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token')?.value;
+  
+  const userId = await getUserData(token);
   if (!userId) {
     return <div>Please log in to view your cart</div>;
   }
-  const cart = await getCartByUserId(userId);
-  console.log("cart", cart);
+  const cart = await getCartByUserId(token);
   return (
    <AppLayout>
       <CartList cart={cart} />

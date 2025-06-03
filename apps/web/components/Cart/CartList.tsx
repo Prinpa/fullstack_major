@@ -6,7 +6,6 @@ export async function CartList({
 }: {
   cart: CartItem[],
 }) {
-  console.log("cart", cart);
   return (
     <div>
       {cart.map((item: CartItem) => (

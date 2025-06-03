@@ -36,7 +36,15 @@ model user {
   lastName  String
   email     String   @unique
   password  String
-  role     String   @default("user")
+  role      String   @default("user")
+  refreshTokens refreshTokens[]  // Add this relation
+}
+
+model refreshTokens {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  refreshToken String   @unique
+  user         user     @relation(fields: [userId], references: [id])  // Add this relation
 }
 
 //cart model contain id, userId, productId, quantity
@@ -46,3 +54,4 @@ model cart {
   productId Int
   quantity  Int
 }
+

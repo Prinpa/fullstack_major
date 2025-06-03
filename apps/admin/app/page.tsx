@@ -8,7 +8,7 @@ import { ProductList } from "components/Products/ProductList";
 
 export default async function Home() {
   const products = await getProducts();
-
+  
   return (
     <AppLayout>
     <ProductList products={products}></ProductList>

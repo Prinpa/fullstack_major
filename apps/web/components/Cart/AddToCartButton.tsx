@@ -1,25 +1,29 @@
 "use client"
 import { addToCart } from "components/cartFunctions"
-import { getUserId } from "utils/auth"
+import { getUserData } from "components/authFunctions";
 import { useState } from "react"
 
 
+
+
 export function AddToCartButton( {productId}: {productId: number}) {
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+
   const handleAddToCart = async () => {
     try {
+
       setIsLoading(true);
       setError(null);
-      const userId = await getUserId();
+      const userData = await getUserData();
       
-      if (!userId) {
+      if (!userData) {
         setError("Please login to add items to cart");
         return;
       }
-
-      await addToCart(productId, userId, 1);
+      await addToCart(productId, userData.userId, 1);
       // Optional: Add success feedback here
     } catch (err) {
       setError("Failed to add item to cart");
@@ -27,7 +31,6 @@ export function AddToCartButton( {productId}: {productId: number}) {
       setIsLoading(false);
     }
   };
-
   return (
     <div>
       <button 
