@@ -1,4 +1,38 @@
 import { CreateUserData, LoginUserData } from "types";
+import { getToken } from "./tokenFunctions";
+
+const guestUser = {
+    id: 0,
+    name: "SHOUDLNT SHOW UP ANYWHERE",
+    email: "SHOUDLNT SHOW UP ANYWHERE",
+    role: "guest"}
+// get user data
+export async function getUserData() {
+    const token = await getToken();
+    if (!token) {
+        return guestUser;
+    }
+    console.log("Missed the guest user");
+    try {
+        const response = await fetch('http://localhost:3000/api/auth', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            cache: 'no-store'
+        });
+        console.log("Response from auth:", response);
+        if (!response.ok) {
+            return null;
+        }
+        const data = await response.json();
+        return data.user;
+    } catch (error) {
+        console.error('Error getting user role:', error);
+        return null;
+    }
+}
 // add user
 export async function addUser(formData: CreateUserData) {
   const response = await fetch('http://localhost:3000/api/auth', {
@@ -14,27 +48,45 @@ export async function addUser(formData: CreateUserData) {
 
 // login user
 export async function loginUser(formData: LoginUserData) {
-  const response = await fetch('http://localhost:3000/api/auth', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({...formData}),
-  });
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch('http://localhost:3000/api/auth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({...formData}),
+      credentials: 'include', // This is important to include cookies
+    });
+    const data = await response.json();
+    console.log("Login response:", data);
+    if (!response.ok) {
+      throw new Error(data.error || 'Login failed');
+    }
+    
+    return data;
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
+  }
 }
 
 // logout user
 export async function logoutUser() {
-  const response = await fetch('http://localhost:3000/api/auth', {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  const data = await response.json();
-  window.location.href = '/';
-  console.log("logouted out");
-  return data;
+  try {
+    const response = await fetch('http://localhost:3000/api/auth', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include', // This is important to include cookies
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.error || 'Logout failed');
+    }
+    return data;
+  } catch (error) {
+    console.error("Logout error:", error);
+    throw error;
+  }
 }

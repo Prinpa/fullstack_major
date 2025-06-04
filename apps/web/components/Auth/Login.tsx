@@ -1,16 +1,15 @@
 "use client"
 import { useState } from 'react';
 import { CreateUserData } from 'types';
-//import { useRouter } from 'next/navigation';
-import { addUser, loginUser } from 'components/authFunctions';
+import { loginUser } from 'components/authFunctions';
 
 export default function Login() {
-  //const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [errors, setErrors] = useState<Partial<CreateUserData>>({});
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<CreateUserData> = {};
@@ -27,14 +26,19 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoginError(null);
     
     if (validateForm()) {
       try {
-
-        const response = loginUser(formData);
-        //router.push('/login'); // Redirect to login page after successful signup
+        const response = await loginUser(formData);
+        if (response.error) {
+          setLoginError(response.error);
+        }
+        window.location.href = '/';
+        // The redirect will be handled in loginUser function
       } catch (error) {
         console.error('Login error:', error);
+        setLoginError('An error occurred during login');
       }
     }
   };
@@ -50,9 +54,12 @@ export default function Login() {
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">Sign in</h2>
+      {loginError && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+          {loginError}
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="space-y-4">
-
-
         <div>
           <label className="block text-sm font-medium mb-1">Email</label>
           <input
@@ -84,7 +91,7 @@ export default function Login() {
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
         >
-          Sign Up
+          Sign In
         </button>
       </form>
     </div>

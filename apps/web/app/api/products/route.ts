@@ -10,14 +10,8 @@ export async function GET(request: NextRequest) {
               deletedAt: null
             }
           });
-        // if (!products.length) {
-        //   return NextResponse.json(
-        //     { message: "No products found" },
-        //     { status: 404 }
-        //   );
-        // }
 
-        return NextResponse.json(
+          return NextResponse.json(
             { data: products, message: "Products retrieved successfully" },
             { status: 200 }
         );
@@ -36,14 +30,15 @@ export async function POST(request: NextRequest) {
     try {
         const prisma = createClient();
         const body = await request.json();
-        const { productHolder } = body;
-
+        const productHolder = body;
+        console.log("here")
         if (!productHolder) {
             return NextResponse.json(
                 { message: "Missing product data" },
                 { status: 400 }
             );
         }
+        console.log("product holder: " , productHolder)
 
         const product = await prisma.products.create({
             data: {
@@ -58,14 +53,17 @@ export async function POST(request: NextRequest) {
                 category: productHolder.category,
                 sold: productHolder.sold,
                 active: productHolder.active,
+                deletedAt: null,
             },
         });
+        console.log("here")
 
         return NextResponse.json(
             { data: product, message: "Product created successfully" },
             { status: 201 }
         );
     } catch (error) {
+        console.log(error)
         return NextResponse.json(
             {
                 message: "Failed to create product",

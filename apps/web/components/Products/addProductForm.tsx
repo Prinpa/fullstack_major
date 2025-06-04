@@ -18,7 +18,7 @@ export function AddProductForm({ product }: { product?: Product }) {
     quantity: product?.quantity || 0,
     category: product?.category || "",
     sold: product?.sold || false,
-    active: product?.active || true,
+    active: (product?.active || true) as boolean,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -148,7 +148,7 @@ export function AddProductForm({ product }: { product?: Product }) {
             type="checkbox"
             name="active"
             checked={formState.active}
-            //onChange={e => setFormState(prev => ({ ...prev, active: e.target.checked }))}
+            onChange={e => setFormState(prev => ({ ...prev, active: e.target.checked }))}
             className="rounded border-gray-300"
           />
           <span className="ml-2">Active</span>
