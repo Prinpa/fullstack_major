@@ -29,7 +29,7 @@ export async function GET(request: Request) {
     }
 
     try {
-        const decoded = jwt.verify(token, env.JWT_SECRET || "your-secret-key");
+        const decoded = jwt.verify(token, env.JWT_SECRET);
         return NextResponse.json({ 
             message: "Token is valid",
             user: decoded

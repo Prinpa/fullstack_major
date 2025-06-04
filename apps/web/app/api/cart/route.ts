@@ -9,7 +9,10 @@ export async function GET(request: NextRequest) {
     try {
         const prisma = createClient();
         const headersList = await headers();
+        console.log("above");
+        
         const authorization = headersList.get("Authorization");
+        console.log("authorization:", authorization);
 
         if (!authorization) {
             return NextResponse.json(
@@ -54,7 +57,7 @@ export async function POST(request: NextRequest) {
     try {
         const prisma = createClient();
         const body = await request.json();
-        const { productId, userId, quantity } = { ...body };
+        const { productId, userId, quantity, price } = { ...body };
         
         const headersList = await headers();
         const authorization = headersList.get("Authorization");
@@ -70,7 +73,7 @@ export async function POST(request: NextRequest) {
 
         // Check if user is admin or if they're accessing their own cart
         console.log("User Data:", userData);
-        console.log(userId)
+        console.log(price)
         if (userId != userData.userId) {
             return NextResponse.json(
                 { message: "Unauthorized: Can only modify your own cart" },
@@ -90,6 +93,7 @@ export async function POST(request: NextRequest) {
                 userId: userId,
                 productId: productId,
                 quantity: quantity,
+                price: price,
             },
         });
 

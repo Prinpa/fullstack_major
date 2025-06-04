@@ -3,18 +3,19 @@ import { getCartByUserId } from "components/cartFunctions";
 import { getUserData } from "components/authFunctions";
 import { CartList } from "components/Cart/CartList";
 import { getToken } from "components/tokenFunctions";
+import { PaymentFrom } from "components/Cart/paymentForm";
 export default async function page() {
 
+  const userData = await getUserData();
   const token = await getToken();
-  
-  const userId = await getUserData();
-  if (!userId) {
-    return <div>Please log in to view your cart</div>;
+  let cart = [];
+  if (token) {
+    cart = await getCartByUserId(token);
   }
-  const cart = await getCartByUserId(token);
   return (
    <AppLayout>
-      <CartList cart={cart} />
+      {userData.role === "guest" ? <div>Please log in to view your cart</div> : <CartList cart={cart} />}
+      <PaymentFrom/>
    </AppLayout>
   );
 }

@@ -46,6 +46,7 @@ export function ProductDetail({ product }: { product: Product }) {
                         <AddToCartButton
                             productId={product.id}
                             quantity={quantity}
+                            price={product.price}
                         />
                     </div>
                 ) : (
