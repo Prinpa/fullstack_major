@@ -1,6 +1,7 @@
 import { createClient } from "../../../../../packages/db/client";
 import jwt from "jsonwebtoken";
 import { env } from "@repo/env/web";
+import { CartItem } from "types";
 
 const prisma = createClient();
 
@@ -82,7 +83,7 @@ export async function POST(request: Request) {
         }
         // Create orders with the same orderId for all items
         const order = await prisma.orders.createMany({
-            data: cart.map(item => ({
+            data: cart.map((item: CartItem) => ({
                 orderId: orderId,
                 userId: userData.userId,
                 productId: item.productId,
