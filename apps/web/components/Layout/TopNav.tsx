@@ -20,6 +20,7 @@ export async function TopNav() {
           <h2>Hello user: {userData.firstName}</h2>
           <h2>Your role is: {userData.role}</h2>
           <h2><Link href={"/cart"}>Cart</Link></h2>
+          <h2><Link href={"/orders"}>Orders</Link></h2>
         </>
       )}
       {userData.role === "admin" && <><h2><Link href={"/add-product"}>Add product</Link></h2></>}

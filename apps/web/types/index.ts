@@ -1,34 +1,43 @@
 export type Product = {
-  id: number;
-  title: string;
-  content: string;
-  description: string;
-  imageUrl: string;
-  listedDate: Date;
-  soldDate?: Date | null;
-  price: number;
-  quantity: number;
-  category: string;
-  sold: boolean;
-  active: boolean;
+    id: number;
+    title: string;
+    content: string;
+    description: string;
+    imageUrl: string;
+    listedDate: Date;
+    soldDate?: Date | null;
+    price: number;
+    quantity: number;
+    category: string;
+    sold: boolean;
+    active: boolean;
 };
 
 export type CreateUserData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+};
 
 export type LoginUserData = {
-  email: string;
-  password: string;
-}
+    email: string;
+    password: string;
+};
 
 export type CartItem = {
-  id: number;
-  productId: number;
-  userId: string;
-  quantity: number;
-}
+    id: number;
+    productId: number;
+    userId: number;
+    quantity: number;
+    price: number;
+};
+
+export type OrderItem = {
+    orderId: string;
+    userId: number;
+    productId: number;
+    quantity: number;
+    price: number;
+};

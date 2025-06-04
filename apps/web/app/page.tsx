@@ -1,12 +1,13 @@
+import { products } from "@prisma/client";
 import { getUserData } from "components/authFunctions";
 import { AppLayout } from "components/Layout/AppLayout";
 import { getProducts } from "components/productFunctions";
 import { ProductList } from "components/Products/ProductList";
+import  { Product } from "types";
+import { FilterForm } from "components/Products/filterForm";
 
 export default async function Home() {
-  const products = await getProducts();
-
-  const userData = await getUserData();
+  const initialProducts = await getProducts();
   
   return (
     <AppLayout>
@@ -14,7 +15,7 @@ export default async function Home() {
           <div className="p-4">
             <h1 className="text-2xl font-bold">Welcome to Our Store</h1>
           </div>
-          <ProductList products={products} />
+          <ProductList initialProducts={initialProducts}/>
       </div>
     </AppLayout>
   );

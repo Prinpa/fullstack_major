@@ -1,8 +1,13 @@
+import { getUserData } from "./authFunctions";
 import { getToken } from "./tokenFunctions";
+import { CartItem } from "types";
+
+
 export async function addToCart(
     productId: number,
     userId: string,
     quantity: number,
+    price: number
 ) {
     const token = await getToken();
     console.log("Token:", token);
@@ -12,7 +17,7 @@ export async function addToCart(
             "Content-Type": "application/json",
             'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ productId, userId, quantity }),
+        body: JSON.stringify({ productId, userId, quantity, price }),
     });
     const data = await response.json();
     return data.data;
@@ -29,4 +34,31 @@ export async function getCartByUserId(token: string | null) {
     });
     const data = await response.json();
     return data.data ?? [];
+}
+
+export async function placeOrder() {
+    const token = await getToken();
+    const response = await fetch("http://localhost:3000/api/orders", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    const data = await response.json();
+    return data.data;
+}
+
+export async function getOrders() {
+    const token = await getToken();
+    const response = await fetch(`http://localhost:3000/api/orders`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    const data = await response.json();
+    console.log("Orders Data:", data);
+    return data ?? [];
 }

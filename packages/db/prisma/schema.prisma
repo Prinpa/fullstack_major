@@ -21,7 +21,7 @@ model products {
   imageUrl  String
   listedDate  DateTime @default(now())
   soldDate  DateTime?
-  price  Float
+  price  Int
   quantity  Int
   category  String
   sold  Boolean  @default(false)
@@ -53,5 +53,16 @@ model cart {
   userId    Int
   productId Int
   quantity  Int
+  price Int
+}
+
+model orders {
+  id        Int      @id @default(autoincrement())
+  orderId   String 
+  userId    Int
+  productId Int
+  quantity  Int
+  price     Int
+  createdAt DateTime @default(now())
 }
 
