@@ -1,4 +1,3 @@
-import { products } from "@prisma/client";
 import { getUserData } from "components/authFunctions";
 import { AppLayout } from "components/Layout/AppLayout";
 import { getProducts } from "components/productFunctions";
