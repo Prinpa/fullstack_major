@@ -1,4 +1,3 @@
-import { products } from "@prisma/client";
 import { Product } from "types";
 import { getToken } from "./tokenFunctions";
 import { FilterState } from "./Products/filterForm";
