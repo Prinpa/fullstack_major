@@ -3,7 +3,7 @@ import { getToken } from "./tokenFunctions";
 
 const guestUser = {
     id: 0,
-  name: "SHOUDLNT SHOW UP ANYWHERE",
+    name: "SHOUDLNT SHOW UP ANYWHERE",
     email: "SHOUDLNT SHOW UP ANYWHERE",
     role: "guest"}
 // get user data
@@ -12,6 +12,7 @@ export async function getUserData() {
     if (!token) {
         return guestUser;
     }
+    console.log("Missed the guest user");
     try {
         const response = await fetch('http://localhost:3000/api/auth', {
             method: 'GET',
@@ -21,7 +22,7 @@ export async function getUserData() {
             },
             cache: 'no-store'
         });
-
+        console.log("Response from auth:", response);
         if (!response.ok) {
             return null;
         }

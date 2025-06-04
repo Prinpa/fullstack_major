@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
         const cart = await prisma.cart.findMany({
             where: {
-                userId: 1
+                userId: decoded.userId,
             },
         });
 

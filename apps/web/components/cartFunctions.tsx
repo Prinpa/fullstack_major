@@ -19,7 +19,7 @@ export async function addToCart(
 }
 
 //get cart by user id
-export async function getCartByUserId(token: string | undefined) {
+export async function getCartByUserId(token: string | null) {
       const response = await fetch(`http://localhost:3000/api/cart`, {
         method: "GET",
         headers: {

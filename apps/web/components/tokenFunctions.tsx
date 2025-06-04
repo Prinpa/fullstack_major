@@ -12,7 +12,7 @@ export async function getToken() {
     return token;
 }
 
-export async function checkToken(header: string | null) {
+export async function checkAuthHeader(header: string | null) {
     if (!header) {
         console.log("No authorization header found");
         return null;

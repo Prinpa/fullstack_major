@@ -15,7 +15,6 @@ export default async function page({
   return (
     <AppLayout>
       {userData.role === "admin" ? <AddProductForm product={product}/>:  <ProductDetail product={product}></ProductDetail>}
-     
     </AppLayout>
   );
 }

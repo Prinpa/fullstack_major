@@ -1,7 +1,7 @@
 import { createClient } from "../../../../../../packages/db/client";
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { checkToken } from "components/tokenFunctions";
+import { checkAuthHeader } from "components/tokenFunctions";
 
 const prisma = createClient();
 
@@ -46,7 +46,7 @@ export async function PUT(
     try {
         const headersList = await headers();
         const authorization = headersList.get("Authorization");
-        const userData = await checkToken(authorization);
+        const userData = await checkAuthHeader(authorization);
 
         if (!userData || userData.role !== "admin") {
             return NextResponse.json(
@@ -111,7 +111,7 @@ export async function DELETE(
     try {
         const headersList = await headers();
         const authorization = headersList.get("Authorization");
-        const userData = await checkToken(authorization);
+        const userData = await checkAuthHeader(authorization);
         // only admins can do this action
         if (!userData || userData.role !== "admin") {
             return NextResponse.json(

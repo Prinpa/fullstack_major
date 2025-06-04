@@ -13,6 +13,7 @@ export async function CartList({
           <h1>Id: {item.id}</h1>
           <h1>user id: {item.userId}</h1>
           <h1>produdct id: {item.productId}</h1>
+          <h1>quantity: {item.quantity}</h1>
         </div>
       ))}
     </div>

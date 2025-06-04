@@ -6,7 +6,7 @@ import { useState } from "react"
 
 
 
-export function AddToCartButton( {productId}: {productId: number}) {
+export function AddToCartButton( {productId, quantity}: {productId: number; quantity: number}) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +23,7 @@ export function AddToCartButton( {productId}: {productId: number}) {
         setError("Please login to add items to cart");
         return;
       }
-      await addToCart(productId, userData.userId, 1);
+      await addToCart(productId, userData.userId, quantity);
       // Optional: Add success feedback here
     } catch (err) {
       setError("Failed to add item to cart");
