@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "generate": "prisma generate --schema=./prisma/schema.prisma",
-    "build": "pnpm generate && tsc"
+    "build": "pnpm generate"
   },
   "keywords": [],
   "author": "",
