@@ -4,6 +4,10 @@ import { Product } from "types";
 
 export async function GET(request: NextRequest) {
     try {
+        return NextResponse.json(
+            { data: [], message: "Products retrieved successfully" },
+            { status: 200 }
+        );
         const prisma = createClient();
         const searchParams = request.nextUrl.searchParams;
         const title = searchParams.get("title");

@@ -3,7 +3,7 @@ import { getToken } from "./tokenFunctions";
 import { FilterState } from "./Products/filterForm";
 
 export async function getProducts(filters?: FilterState) {
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+  const baseUrl = "fullstack-major-web-git-changingdbtoneon-pats-projects-7cc5582c.vercel.app"
   let url = new URL('/api/products', baseUrl);
   
   if (filters) {
@@ -13,7 +13,7 @@ export async function getProducts(filters?: FilterState) {
     if (filters.maxPrice > 0) url.searchParams.append('maxPrice', filters.maxPrice.toString());
     if (filters.sortBy) url.searchParams.append('sortBy', filters.sortBy);
   }
-  
+  console.log("Fetching products from:", url.toString());
   const response = await fetch(url.toString(), {
     method: 'GET',
     cache: 'no-store', // Don't cache this request
