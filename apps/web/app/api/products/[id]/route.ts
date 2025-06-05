@@ -47,7 +47,9 @@ export async function PUT(
         const headersList = await headers();
         const authorization = headersList.get("Authorization");
         const userData = await getUserDataFromAuthHeader(authorization);
-
+        if (typeof userData === "string") {
+            return NextResponse.json({ message: userData }, { status: 401 });
+        }
         if (!userData || userData.role !== "admin") {
             return NextResponse.json(
                 { message: "Unauthorized" },
@@ -113,9 +115,12 @@ export async function DELETE(
         const authorization = headersList.get("Authorization");
         const userData = await getUserDataFromAuthHeader(authorization);
         // only admins can do this action
+        if (typeof userData === "string") {
+            return NextResponse.json({ message: userData }, { status: 401 });
+        }
         if (!userData || userData.role !== "admin") {
             return NextResponse.json(
-                { message: "Unauthorized" },
+                { message: "Unauthorized"},
                 { status: 401 }
             );
         }            
