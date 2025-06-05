@@ -26,7 +26,8 @@
         "PGUSER" ,
         "POSTGRES_URL_NO_SSL" ,
         "POSTGRES_HOST" ,
-        "NEON_PROJECT_ID" 
+        "NEON_PROJECT_ID",
+        "NEXT_PUBLIC_API_URL"
       ],
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
@@ -67,6 +68,7 @@
     "PGUSER" ,
     "POSTGRES_URL_NO_SSL" ,
     "POSTGRES_HOST" ,
-    "NEON_PROJECT_ID" 
+    "NEON_PROJECT_ID",
+    "NEXT_PUBLIC_API_URL"
   ]
 }
