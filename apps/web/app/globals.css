@@ -127,11 +127,11 @@ body {
 }
 
 .home-button {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-right: 2rem;
   text-decoration: none;
-  color: white;
+  color: #000000;
 }
 
 .cart-icon,
