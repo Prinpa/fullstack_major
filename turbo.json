@@ -3,7 +3,12 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "env": ["JWT_SECRET", "NEXTAUTH_SECRET", "NEXT_PUBLIC_API_URL"],      "dependsOn": ["^build"],
+      "env": [
+        "JWT_SECRET",
+        "SKIP_ENV_VALIDATION",
+        "NODE_ENV"
+      ],
+      "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"]
     },
@@ -19,9 +24,9 @@
     }
   },
   "globalDependencies": [".env"],
-  "tasks": {
-    "build": {
-      "inputs": ["$TURBO_DEFAULT$", ".env"]
-    }
-  }
+  "globalEnv": [
+    "JWT_SECRET",
+    "SKIP_ENV_VALIDATION",
+    "NODE_ENV"
+  ]
 }
