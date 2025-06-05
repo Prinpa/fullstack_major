@@ -8,6 +8,7 @@ const getEnvVar = (key: string) => {
   // For browser environment, you could add fallback values or handle differently
   return undefined;
 };
+console.log("JWT_SECRET during build:", process.env.JWT_SECRET);
 
 export const env = createEnv({
   /**
