@@ -15,7 +15,7 @@ export async function getProducts(filters?: FilterState) {
   }
   console.log("Fetching products from:", url.toString());
   console.log(process.env.NEXT_PUBLIC_API_URL)
-  const response = await fetch("/api/products", {
+  const response = await fetch(url.toString(), {
     method: 'GET',
     cache: 'no-store', // Don't cache this request
     headers: {
