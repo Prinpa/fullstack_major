@@ -14,7 +14,8 @@ export async function getProducts(filters?: FilterState) {
     if (filters.sortBy) url.searchParams.append('sortBy', filters.sortBy);
   }
   console.log("Fetching products from:", url.toString());
-  const response = await fetch("https://fullstack-major-web-git-changingdbtoneon-pats-projects-7cc5582c.vercel.app/api/products", {
+  console.log(process.env.NEXT_PUBLIC_API_URL)
+  const response = await fetch(url.toString(), {
     method: 'GET',
     cache: 'no-store', // Don't cache this request
     headers: {
