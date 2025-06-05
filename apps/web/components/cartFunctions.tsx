@@ -10,8 +10,9 @@ export async function addToCart(
     price: number
 ) {
     const token = await getToken();
-    console.log("Token:", token);
-    const response = await fetch("http://localhost:3000/api/cart", {
+    console.log("Token:", token);    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const url = new URL('/api/cart', baseUrl);
+    const response = await fetch(url.toString(), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

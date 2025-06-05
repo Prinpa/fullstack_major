@@ -13,7 +13,8 @@ export async function getProducts(filters?: FilterState) {
     if (filters.maxPrice > 0) url.searchParams.append('maxPrice', filters.maxPrice.toString());
     if (filters.sortBy) url.searchParams.append('sortBy', filters.sortBy);
   }
-  
+  console.log("Fetching products from:", url.toString());
+  console.log(process.env.NEXT_PUBLIC_API_URL)
   const response = await fetch(url.toString(), {
     method: 'GET',
     cache: 'no-store', // Don't cache this request
