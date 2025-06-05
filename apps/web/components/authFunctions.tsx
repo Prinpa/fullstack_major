@@ -11,10 +11,10 @@ export async function getUserData() {
     const token = await getToken();
     if (!token) {
         return guestUser;
-    }
-
-    try {
-        const response = await fetch('http://localhost:3000/api/auth', {
+    }    try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+        const url = new URL('/api/auth', baseUrl);
+        const response = await fetch(url.toString(), {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,7 +34,9 @@ export async function getUserData() {
 }
 // add user
 export async function addUser(formData: CreateUserData) {
-  const response = await fetch('http://localhost:3000/api/auth', {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+  const url = new URL('/api/auth', baseUrl);
+  const response = await fetch(url.toString(), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -46,9 +48,10 @@ export async function addUser(formData: CreateUserData) {
 }
 
 // login user
-export async function loginUser(formData: LoginUserData) {
-  try {
-    const response = await fetch('http://localhost:3000/api/auth', {
+export async function loginUser(formData: LoginUserData) {  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const url = new URL('/api/auth', baseUrl);
+    const response = await fetch(url.toString(), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -70,9 +73,10 @@ export async function loginUser(formData: LoginUserData) {
 }
 
 // logout user
-export async function logoutUser() {
-  try {
-    const response = await fetch('http://localhost:3000/api/auth', {
+export async function logoutUser() {  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const url = new URL('/api/auth', baseUrl);
+    const response = await fetch(url.toString(), {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
