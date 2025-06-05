@@ -1,7 +1,7 @@
 import { createClient } from "../../../../../../packages/db/client";
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { checkAuthHeader } from "components/tokenFunctions";
+import { getUserDataFromAuthHeader } from "components/tokenFunctions";
 
 const prisma = createClient();
 
@@ -46,8 +46,10 @@ export async function PUT(
     try {
         const headersList = await headers();
         const authorization = headersList.get("Authorization");
-        const userData = await checkAuthHeader(authorization);
-
+        const userData = await getUserDataFromAuthHeader(authorization);
+        if (typeof userData === "string") {
+            return NextResponse.json({ message: userData }, { status: 401 });
+        }
         if (!userData || userData.role !== "admin") {
             return NextResponse.json(
                 { message: "Unauthorized" },
@@ -111,11 +113,14 @@ export async function DELETE(
     try {
         const headersList = await headers();
         const authorization = headersList.get("Authorization");
-        const userData = await checkAuthHeader(authorization);
+        const userData = await getUserDataFromAuthHeader(authorization);
         // only admins can do this action
+        if (typeof userData === "string") {
+            return NextResponse.json({ message: userData }, { status: 401 });
+        }
         if (!userData || userData.role !== "admin") {
             return NextResponse.json(
-                { message: "Unauthorized" },
+                { message: "Unauthorized"},
                 { status: 401 }
             );
         }            

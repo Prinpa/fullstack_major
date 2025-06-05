@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from "react"
+import { getUserData } from "components/authFunctions";
 
 export type FilterState = {
   title: string;
@@ -7,6 +8,7 @@ export type FilterState = {
   minPrice: number;
   maxPrice: number;
   sortBy: string;
+  showDeleted: boolean
 }
 
 function debounce<T extends (...args: any[]) => any>(fn: T, delay = 300) {
@@ -16,6 +18,8 @@ function debounce<T extends (...args: any[]) => any>(fn: T, delay = 300) {
     timeoutId = setTimeout(() => fn.apply(this, args), delay);
   };
 }
+
+
 
 export function FilterForm({
   onFilterChange
@@ -28,20 +32,38 @@ export function FilterForm({
     minPrice: 0,
     maxPrice: 0,
     sortBy: "listedDate",
+    showDeleted: false
   });
 
   const [error, setError] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch user role when component mounts
+    const fetchUserRole = async () => {
+      const userData = await getUserData();
+      setUserRole(userData?.role || null);
+    };
+    fetchUserRole();
+  }, []);
 
   useEffect(() => {
     onFilterChange(formState);
   }, [formState]);
 
-  const handleInputChange = debounce((name: keyof FilterState, value: string | number) => {
+  const handleInputChange = (name: keyof FilterState, value: string | number | boolean) => {
+    setFormState(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  const handleDebouceInputChange = debounce((name: keyof FilterState, value: string | number | boolean) => {
     setFormState(prev => ({
       ...prev,
       [name]: value
     }));
   }, 500);
+
   return (
     <div className="filter-form">
       <h3 className="filter-header">Filters</h3>
@@ -52,7 +74,7 @@ export function FilterForm({
           id="title"
           placeholder="Search by title..."
           className="search-input"
-          onChange={(e) => handleInputChange('title', e.target.value)}
+          onChange={(e) => handleDebouceInputChange('title', e.target.value)}
           defaultValue={formState.title}
         />
       </div>
@@ -82,7 +104,7 @@ export function FilterForm({
             id="minPrice"
             placeholder="Min"
             className="price-input"
-            onChange={(e) => handleInputChange('minPrice', Number(e.target.value))}
+            onChange={(e) => handleDebouceInputChange('minPrice', Number(e.target.value))}
             defaultValue={formState.minPrice || ''}
           />
           <span className="price-separator">to</span>
@@ -91,7 +113,7 @@ export function FilterForm({
             id="maxPrice"
             placeholder="Max"
             className="price-input"
-            onChange={(e) => handleInputChange('maxPrice', Number(e.target.value))}
+            onChange={(e) => handleDebouceInputChange('maxPrice', Number(e.target.value))}
             defaultValue={formState.maxPrice || ''}
           />
         </div>
@@ -113,6 +135,21 @@ export function FilterForm({
           <option value="title_desc">Title (Z-A)</option>
         </select>
       </div>
+
+      {userRole === 'admin' && (
+        <div className="filter-section">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              id="showDeleted"
+              className="checkbox-input"
+              onChange={(e) => handleInputChange('showDeleted', e.target.checked)}
+              checked={formState.showDeleted}
+            />
+            Show deleted items
+          </label>
+        </div>
+      )}
 
       {error && <p className="error-message">{error}</p>}
     </div>

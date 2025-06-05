@@ -12,27 +12,23 @@ export async function getToken() {
     return token;
 }
 
-export async function checkAuthHeader(header: string | null) {
+export async function getUserDataFromAuthHeader(header: string | null) {
     if (!header) {
-        console.log("No authorization header found");
-        return null;
+        return "No authorization header found";
     }
     if (!header.startsWith("Bearer ")) {
-        console.log("Not a bearer token");
-        return null;
+        return "Not a bearer token";
     }
     const token = header.split(" ")[1];
     if (!token) {
-        console.log("No token found in authorization header");
-        return null;
+        return "No token found in authorization header";
     }
     const userData = jwt.verify(token, env.JWT_SECRET);
     if (typeof userData === "string") {
-        return null;
+        return "Invalid token format";
     }
     if (!userData) {
-        console.log("Invalid token");
-        return null;
+        return "unknown error";
     }
     return userData;
 }
