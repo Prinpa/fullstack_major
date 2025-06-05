@@ -14,7 +14,6 @@ export default async function Home() {
           <div className="p-4">
             <h1 className="text-2xl font-bold">Welcome to Our Store</h1>
           </div>
-          <ProductList initialProducts={initialProducts}/>
       </div>
     </AppLayout>
   );
