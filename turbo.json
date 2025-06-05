@@ -6,7 +6,8 @@
       "env": [
         "JWT_SECRET",
         "SKIP_ENV_VALIDATION",
-        "NODE_ENV"
+        "NODE_ENV",
+        "DATABASE_URL"
       ],
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
@@ -27,6 +28,8 @@
   "globalEnv": [
     "JWT_SECRET",
     "SKIP_ENV_VALIDATION",
-    "NODE_ENV"
+    "NODE_ENV",
+    "DATABASE_URL"
+
   ]
 }
