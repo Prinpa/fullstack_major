@@ -11,9 +11,7 @@ export async function GET(request: NextRequest) {
         const minPrice = searchParams.get("minPrice");
         const maxPrice = searchParams.get("maxPrice");
         const sortBy = searchParams.get("sortBy");
-        
-        console.log("searchParams:", searchParams);
-        
+                
         let orderBy: any = {};
         if (sortBy === "price_asc") {
             orderBy.price = "asc";
@@ -58,7 +56,6 @@ export async function GET(request: NextRequest) {
             where: where,
             orderBy: orderBy,
         });
-        //console.log(products)
         return NextResponse.json(
             { data: products, message: "Products retrieved successfully" },
             { status: 200 }
@@ -80,15 +77,12 @@ export async function POST(request: NextRequest) {
         const prisma = createClient();
         const body = await request.json();
         const productHolder = body;
-        console.log("here");
         if (!productHolder) {
             return NextResponse.json(
                 { message: "Missing product data" },
                 { status: 400 }
             );
         }
-        console.log("product holder:", productHolder);
-
         const product = await prisma.products.create({
             data: {
                 title: productHolder.title,

@@ -7,8 +7,10 @@ export async function AppLayout({
 }: PropsWithChildren<{ query?: string }>) {
   return (
     <>
-    <TopNav/>
-      {children}
+      <TopNav />
+      <main className="main-layout">
+        {children}
+      </main>
     </>
   );
 }

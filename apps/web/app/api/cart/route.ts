@@ -9,10 +9,8 @@ export async function GET(request: NextRequest) {
     try {
         const prisma = createClient();
         const headersList = await headers();
-        console.log("above");
         
         const authorization = headersList.get("Authorization");
-        console.log("authorization:", authorization);
 
         if (!authorization) {
             return NextResponse.json(
@@ -62,7 +60,6 @@ export async function POST(request: NextRequest) {
         const headersList = await headers();
         const authorization = headersList.get("Authorization");
         const token = authorization?.split(" ")[1];
-        console.log("Request Body:", token);
         if (!token) {
             return NextResponse.json(
                 { message: "Unauthorized: No token provided" },
@@ -72,8 +69,6 @@ export async function POST(request: NextRequest) {
         const userData = jwt.verify(token, env.JWT_SECRET) as {userId: number};
 
         // Check if user is admin or if they're accessing their own cart
-        console.log("User Data:", userData);
-        console.log(price)
         if (userId != userData.userId) {
             return NextResponse.json(
                 { message: "Unauthorized: Can only modify your own cart" },

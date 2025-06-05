@@ -9,7 +9,6 @@ export default async function Home() {
   
   return (
    <AppLayout>
-     <div>THIS is the signin page</div>
      <Login/>
    </AppLayout>
   );

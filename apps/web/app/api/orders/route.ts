@@ -91,7 +91,6 @@ export async function POST(request: Request) {
                 price: item.price,
             })),
         });
-        console.log("here");
 
         // Clear the user's cart after order is created
         await prisma.cart.deleteMany({

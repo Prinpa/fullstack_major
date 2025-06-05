@@ -42,79 +42,79 @@ export function FilterForm({
       [name]: value
     }));
   }, 500);
-
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
-      <h3 className="text-lg font-semibold mb-4">Filter Products</h3>
-      <div className="space-y-4">
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium">Search by title</label>
+    <div className="filter-form">
+      <h3 className="filter-header">Filters</h3>
+      
+      <div className="filter-section">
+        <input
+          type="text"
+          id="title"
+          placeholder="Search by title..."
+          className="search-input"
+          onChange={(e) => handleInputChange('title', e.target.value)}
+          defaultValue={formState.title}
+        />
+      </div>
+
+      <div className="filter-section">
+        <h4 className="section-title">Category</h4>
+        <select
+          id="category"
+          className="select-input"
+          onChange={(e) => handleInputChange('category', e.target.value)}
+          value={formState.category}
+        >
+          <option value="">All Categories</option>
+          <option value="electronics">Electronics</option>
+          <option value="games">Games</option>
+          <option value="phones">Phones</option>
+          <option value="computing">Computing</option>
+          <option value="accessories">Accessories</option>
+        </select>
+      </div>
+
+      <div className="filter-section">
+        <h4 className="section-title">Price Range</h4>
+        <div className="price-inputs">
           <input
-            type="text"
-            id="title"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            onChange={(e) => handleInputChange('title', e.target.value)}
-            defaultValue={formState.title}
+            type="number"
+            id="minPrice"
+            placeholder="Min"
+            className="price-input"
+            onChange={(e) => handleInputChange('minPrice', Number(e.target.value))}
+            defaultValue={formState.minPrice || ''}
+          />
+          <span className="price-separator">to</span>
+          <input
+            type="number"
+            id="maxPrice"
+            placeholder="Max"
+            className="price-input"
+            onChange={(e) => handleInputChange('maxPrice', Number(e.target.value))}
+            defaultValue={formState.maxPrice || ''}
           />
         </div>
-
-        <div>
-          <label htmlFor="category" className="block text-sm font-medium">Category</label>
-          <select
-            id="category"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            onChange={(e) => handleInputChange('category', e.target.value)}
-            value={formState.category}
-          >
-            <option value="">All Categories</option>
-            <option value="electronics">Electronics</option>
-            <option value="clothing">Clothing</option>
-            <option value="books">Books</option>
-            {/* Add more categories as needed */}
-          </select>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="minPrice" className="block text-sm font-medium">Min Price</label>
-            <input
-              type="number"
-              id="minPrice"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-              onChange={(e) => handleInputChange('minPrice', Number(e.target.value))}
-              defaultValue={formState.minPrice}
-            />
-          </div>
-          <div>
-            <label htmlFor="maxPrice" className="block text-sm font-medium">Max Price</label>
-            <input
-              type="number"
-              id="maxPrice"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-              onChange={(e) => handleInputChange('maxPrice', Number(e.target.value))}
-              defaultValue={formState.maxPrice}
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="sortBy" className="block text-sm font-medium">Sort By</label>
-          <select
-            id="sortBy"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            onChange={(e) => handleInputChange('sortBy', e.target.value)}
-            value={formState.sortBy}
-          >
-            <option value="listedDate_desc">Latest</option>
-            <option value="listedDate_asc">Earliest</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="title_asc">Title (asc)</option>
-            <option value="title_desc">Title (desc)</option>
-          </select>
-        </div>
       </div>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+
+      <div className="filter-section">
+        <h4 className="section-title">Sort By</h4>
+        <select
+          id="sortBy"
+          className="select-input"
+          onChange={(e) => handleInputChange('sortBy', e.target.value)}
+          value={formState.sortBy}
+        >
+          <option value="listedDate_desc">Latest</option>
+          <option value="listedDate_asc">Earliest</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+          <option value="title_asc">Title (A-Z)</option>
+          <option value="title_desc">Title (Z-A)</option>
+        </select>
+      </div>
+
+      {error && <p className="error-message">{error}</p>}
     </div>
-  )
+  );
 }

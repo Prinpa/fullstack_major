@@ -22,7 +22,7 @@ export async function getProducts(filters?: FilterState) {
       'Content-Type': 'application/json',
     },
   });
-
+  console.log("Response status:", response);
   if (!response.ok) {
     throw new Error(`Failed to fetch products: ${response.statusText}`);
   }
