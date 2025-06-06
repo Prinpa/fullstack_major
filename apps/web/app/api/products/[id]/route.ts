@@ -10,12 +10,16 @@ export async function GET(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        console.log("Product retrieved:");
+
         const { id } = await params;
+        console.log("Fetching product with ID:", id);
         const product = await prisma.products.findUnique({
             where: {
                 id: Number(id),
             },
         });
+        console.log("Product retrieved:", product);
 
         if (!product) {
             return NextResponse.json(
@@ -23,7 +27,7 @@ export async function GET(
                 { status: 404 }
             );
         }
-
+        console.log("Product retrieved:", product);
         return NextResponse.json(
             { data: product, message: "Product retrieved successfully" },
             { status: 200 }

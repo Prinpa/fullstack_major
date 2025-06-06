@@ -11,7 +11,7 @@ export default async function page({
   const { productId } = await params;
   const product = await getProductById(productId);
   const userData = await getUserData();
-
+  console.log("User Data:", productId);
   return (
     <AppLayout>
       {userData.role === "admin" ? <AddProductForm product={product}/>:  <ProductDetail product={product}></ProductDetail>}

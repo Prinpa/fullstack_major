@@ -34,6 +34,8 @@ export async function getUserData() {
 }
 // add user
 export async function addUser(formData: CreateUserData) {
+  console.log("Add user response:");
+
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
   const url = new URL('/api/auth', baseUrl);
   const response = await fetch(url.toString(), {
@@ -60,7 +62,6 @@ export async function loginUser(formData: LoginUserData) {  try {
       credentials: 'include', // This is important to include cookies
     });
     const data = await response.json();
-    console.log("Login response:", data);
     if (!response.ok) {
       throw new Error(data.error || 'Login failed');
     }
@@ -81,7 +82,7 @@ export async function logoutUser() {  try {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include', // This is important to include cookies
+      credentials: 'include',
     });
     const data = await response.json();
     if (!response.ok) {

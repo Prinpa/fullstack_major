@@ -27,7 +27,6 @@ export async function GET(request: NextRequest) {
         console.log("No token found in authorization header");
         return NextResponse.json({ message: "No token provided" }, { status: 401 });
     }
-
     try {
         const decoded = jwt.verify(token, env.JWT_SECRET);
         return NextResponse.json({ 
@@ -80,20 +79,9 @@ export async function POST(request: NextRequest) {
             where: { email },
         });
 
-        if (!user) {
+        if (!user || user.password !== password) {
             return NextResponse.json(
-                { error: "User not found" },
-                { status: 401 }
-            );
-        }
-
-        // Verify password
-        //const validPassword = await compare(password, user.password);
-        // todo shouldnt be sending back incorrect password
-        const validPassword = password === user.password;
-        if (!validPassword) {
-            return NextResponse.json(
-                { error: "Invalid password", correct: false },
+                { error: "Email or Password incorrect" },
                 { status: 401 }
             );
         }
