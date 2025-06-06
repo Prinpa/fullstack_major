@@ -23,6 +23,8 @@
     "prisma": "^6.9.0"
   },
   "exports": {
-    "./seed": "./seed.ts"
+    "./seed": "./seed.ts",
+    "./client": "./client.ts"
+
   }
 }

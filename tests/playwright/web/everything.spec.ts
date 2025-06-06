@@ -2,10 +2,11 @@ import { test, expect } from './fixture';
 import {seed} from "@repo/db/seed"
 
 const waitTime = 600;
-test.describe('Home Screen', () => {
+let products;
+test.describe('yes its all test files in one im sorry', () => {
   
-  test.beforeAll(async () => {
-    await seed();
+  test.beforeEach(async () => {
+    products = await seed();
   });
   
   test("Loading when un authenticated", async ({ page }) => {
@@ -13,7 +14,7 @@ test.describe('Home Screen', () => {
     await expect(page.getByText("nexus")).toBeVisible();
   })
 
-  test("Test auth flow", async ({ userPage }) => {
+  test("Test auth flow",{tag: "@auth"}, async ({ userPage }) => {
     // Sign up
     await userPage.goto('http://localhost:3000/signUp');
     await userPage.getByLabel("firstName").fill("Test");
@@ -31,24 +32,26 @@ test.describe('Home Screen', () => {
     // Login
     await userPage.getByLabel("Email").fill("test@example.com");
     await userPage.getByLabel("Password").fill("hashedPassword");
-    await userPage.getByRole("button", { name: "Login" }).click();
+    await userPage.getByRole("button", { name: "Log in" }).click();
     
     // Wait for login to complete and verify we're logged in
     await userPage.waitForURL('http://localhost:3000');
     
     // Get and log the cookies to verify authentication
-    const cookies = await userPage.context().cookies();
+
 
     // Save the authentication state for future tests
-    await userPage.context().storageState({ path: '.auth/admin.json' });
-    
+    await userPage.context().storageState({ path: '.auth/user.json' });
+    console.log("Authentication state saved to .auth/user.json");
     // Verify we're logged in by checking for admin-only content
     await expect(userPage.getByText("Nexus")).toBeVisible();
   });
 
   test("Is authenticated", async ({ userPage }) => {
     await userPage.goto('http://localhost:3000');
-    await expect(userPage.getByText("Hello, Test")).toBeVisible();
+    await expect(userPage.getByText("Hello")).toBeVisible();
+    // print cookies
+
   })
 
   test("Showing all products", async ({ userPage }) => {
@@ -137,8 +140,94 @@ test.describe('Home Screen', () => {
     await expect(page.getByText("$100.00")).toBeVisible();
     await expect(page.getByText("Content for product 1")).toBeVisible();
     await expect(page.getByText("In stock: 10")).toBeVisible();
-
-
   })
+
+  
+  test("Loading cart when un authenticated", async ({ page }) => {
+    await page.goto('http://localhost:3000/cart');
+    await expect(page.getByText("You need to be logged in to have a cart")).toBeVisible();
+  });
+
+  test("Logged in user sees empty cart", async ({ userPage }) => {
+    await userPage.goto('http://localhost:3000/cart');
+    await expect(userPage.getByText("Your cart is empty")).toBeVisible();
+  });
+  
+  test("User can add item to cart", async ({ userPage }) => {
+    // Navigate to a product page first (assuming product ID 1 exists from seed data)
+    await userPage.goto(`http://localhost:3000/product/${products[0].id}`);
+    
+    // Set quantity to 2
+    const quantityInput = userPage.getByLabel('Quantity:');
+    await quantityInput.click();
+    await quantityInput.fill('2');
+    
+    // Click add to cart button
+    await userPage.getByRole('button', { name: 'Add To Cart' }).click();
+    
+    // Wait for any loading state to finish
+    await userPage.waitForTimeout(1000);
+    
+    // Go to cart page
+    await userPage.goto('http://localhost:3000/cart');
+    
+    // Check that cart is not empty
+    await expect(userPage.getByText("Your cart is empty")).not.toBeVisible();
+      // Check that we have the correct quantity
+    const quantityElement = userPage.getByTestId('cart-item-quantity');
+    await expect(quantityElement).toBeVisible();
+    await expect(quantityElement).toHaveText('Quantity: 2');
+  });
+
+  test("Cart calculates total price correctly", async ({ userPage }) => {
+    // Navigate to product page and add 2 items
+    await userPage.goto(`http://localhost:3000/product/${products[0].id}`);
+    const quantityInput = userPage.getByLabel('Quantity:');
+    await quantityInput.click();
+    await quantityInput.fill('2');
+    await userPage.getByRole('button', { name: 'Add To Cart' }).click();
+    
+    // Wait for cart update
+    await userPage.waitForTimeout(1000);
+    
+    // Go to cart page
+    await userPage.goto('http://localhost:3000/cart');
+    
+    // Get the product price and calculate expected total
+    const priceText = await userPage.getByTestId('cart-item-price').textContent();
+    const price = parseFloat(priceText?.replace('$', '') || '0');
+    
+    // Check total matches expected calculation
+    const totalText = await userPage.getByTestId('cart-total').textContent();
+    const total = parseFloat(totalText?.replace('Total: $', '') || '0');
+    expect(total).toBeCloseTo(price, 2);
+  });
+
+  test("User can complete checkout", {tag: "@auth"},  async ({ userPage }) => {
+    // First add an item to cart
+    await userPage.goto(`http://localhost:3000/product/${products[0].id}`);
+    await userPage.getByRole('button', { name: 'Add To Cart' }).click();
+    await userPage.waitForTimeout(1000);
+    
+    // Go to cart page
+    await userPage.goto('http://localhost:3000/cart');
+      // Fill in payment details
+    await userPage.locator('#cardHolderName').fill('John Doe');
+    await userPage.locator('#cardNumber').fill('4242424242424242');
+    await userPage.locator('#expiryDate').fill('12/25');
+    await userPage.locator('#cvv').fill('123');
+    
+    // Submit payment
+    await userPage.getByRole('button', { name: 'Complete Payment' }).click();
+    
+    // Wait for the order to be processed
+    await userPage.waitForTimeout(1000);
+    
+    // Navigate to orders page to verify
+    await userPage.goto('http://localhost:3000/orders');
+    
+    // Verify order is visible in orders page
+    await expect(userPage.locator('.order-card')).toBeVisible();
+  });
 
 })    

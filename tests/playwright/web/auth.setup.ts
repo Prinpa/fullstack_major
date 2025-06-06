@@ -1,44 +1,49 @@
 import { test as setup, expect } from '@playwright/test';
-import { createClient } from '@repo/db/client';
-import jwt from 'jsonwebtoken';
+import { createClient } from '../../../packages/db/client';
 import { env } from './test-env';
 
-const prisma = createClient();
+const prisma = createClient(); // Note: Unused, remove if not needed
 
-setup('authenticate as admin', async ({ request, context }) => {
-  // First create a test user if it doesn't exist
-  const testUser = await prisma.user.upsert({
-    where: { email: 'test@example.com' },
-    update: {},
-    create: {
-      email: 'test@example.com',
-      password: 'hashedPassword', // In real app, hash this
-      firstName: 'Test',
-      lastName: 'User',
-      role: 'admin'
-    }
-  });
+setup('authenticate as user', async ({ page }) => {
+  console.log('Running auth.setup.ts');
 
-  // Generate JWT token
-  const token = jwt.sign(
-    { userId: testUser.id, role: testUser.role },
-    env.JWT_SECRET,
-    { expiresIn: '1d' }
-  );
+  try {
+    // Go to login page
+    await page.goto('http://localhost:3000/login', { waitUntil: 'networkidle' });
+    console.log('Navigated to login page');
 
-  console.log('Generated token:', token);
+    // Verify form exists
+    const emailInput = page.locator('input[name="email"]');
+    const passwordInput = page.locator('input[name="password"]');
+    const submitButton = page.locator('button[type="submit"]');
+    await expect(emailInput).toBeVisible();
+    await expect(passwordInput).toBeVisible();
+    await expect(submitButton).toBeVisible();
+    console.log('Login form elements found');
 
-  // Add the token as an HTTP only cookie
-  await context.addCookies([{
-    name: 'token',
-    value: token,
-    domain: 'localhost',
-    path: '/',
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'Lax'
-  }]);
+    // Fill login form
+    await emailInput.fill('test@example.com');
+    await passwordInput.fill('password');
+    console.log('Filled login form');
 
-  // Save authentication state
-  await context.storageState({ path: '.auth/admin.json' });
+    // Click submit
+    await submitButton.click();
+    console.log('Clicked submit');
+
+    // Wait for navigation
+    await page.waitForURL('http://localhost:3000', { timeout: 10000 });
+    console.log('Navigated to homepage');
+
+    // Verify logged in (optional, adjust selector as needed)
+    await expect(page.locator('text=Welcome')).toBeVisible();
+    console.log('Login successful');
+
+    // Save signed-in state
+    await page.context().storageState({ path: '.auth/user.json' });
+    console.log('Saved session state to .auth/user.json');
+  } catch (error) {
+    console.error('Auth setup failed:', error);
+    await page.screenshot({ path: 'auth-setup-error.png' });
+    throw error; // Re-throw to fail the setup
+  }
 });

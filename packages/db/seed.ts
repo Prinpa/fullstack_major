@@ -45,4 +45,6 @@ export async function seed() {
       },
     ],
   });
+  const products = await client.products.findMany();
+  return products;
 }
