@@ -41,3 +41,28 @@ export type OrderItem = {
     quantity: number;
     price: number;
 };
+
+export type ReturnedOrderItem ={
+  productId: number;
+  quantity: number;
+  price: number;
+  product: {
+    id: number;
+    title: string;
+    content: string;
+    description: string;
+    imageUrl: string;
+    price: number;
+    category: string;
+    quantity: number;
+    active: boolean;
+    sold: boolean;
+  };
+}
+
+export type GroupedOrder = {
+  orderId: string;
+  userId?: number;
+  createdAt: Date;
+  items: ReturnedOrderItem[];
+}
