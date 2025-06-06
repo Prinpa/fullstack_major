@@ -30,60 +30,72 @@ export function PaymentFrom() {
       [name]: value
     }));
   };
-
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="cardHolderName">Card Holder Name:</label>
+    <form onSubmit={handleSubmit} className="payment-form">
+      <h3 className="payment-form-title">Payment Details</h3>
+
+      <div className="payment-form-group">
+        <label htmlFor="cardHolderName" className="payment-form-label">Card Holder Name</label>
         <input
           type="text"
           id="cardHolderName"
           name="cardHolderName"
           value={formState.cardHolderName}
           onChange={handleInputChange}
+          className="payment-form-input"
+          placeholder="John Doe"
         />
       </div>
 
-      <div>
-        <label htmlFor="cardNumber">Card Number:</label>
+      <div className="payment-form-group">
+        <label htmlFor="cardNumber" className="payment-form-label">Card Number</label>
         <input
           type="text"
           id="cardNumber"
           name="cardNumber"
           value={formState.cardNumber}
           onChange={handleInputChange}
+          className="payment-form-input"
           maxLength={16}
+          placeholder="1234 5678 9012 3456"
         />
       </div>
 
-      <div>
-        <label htmlFor="expiryDate">Expiry Date:</label>
-        <input
-          type="text"
-          id="expiryDate"
-          name="expiryDate"
-          value={formState.expiryDate}
-          onChange={handleInputChange}
-          placeholder="MM/YY"
-          maxLength={5}
-        />
+      <div className="payment-form-row">
+        <div className="payment-form-group">
+          <label htmlFor="expiryDate" className="payment-form-label">Expiry Date</label>
+          <input
+            type="text"
+            id="expiryDate"
+            name="expiryDate"
+            value={formState.expiryDate}
+            onChange={handleInputChange}
+            className="payment-form-input"
+            placeholder="MM/YY"
+            maxLength={5}
+          />
+        </div>
+
+        <div className="payment-form-group">
+          <label htmlFor="cvv" className="payment-form-label">CVV</label>
+          <input
+            type="text"
+            id="cvv"
+            name="cvv"
+            value={formState.cvv}
+            onChange={handleInputChange}
+            className="payment-form-input"
+            maxLength={4}
+            placeholder="123"
+          />
+        </div>
       </div>
 
-      <div>
-        <label htmlFor="cvv">CVV:</label>
-        <input
-          type="text"
-          id="cvv"
-          name="cvv"
-          value={formState.cvv}
-          onChange={handleInputChange}
-          maxLength={4}
-        />
-      </div>
-
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {error && <div className="payment-error">{error}</div>}
       
-      <button type="submit">Submit Payment</button>
+      <button type="submit" className="payment-submit">
+        Complete Payment
+      </button>
     </form>
   );
 }

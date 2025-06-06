@@ -62,12 +62,12 @@ export function FilterForm({
       ...prev,
       [name]: value
     }));
-  }, 500);
+  });
 
   return (
     <div className="filter-form">
       <h3 className="filter-header">Filters</h3>
-      
+      <label htmlFor="title">Title</label>
       <div className="filter-section">
         <input
           type="text"
@@ -98,19 +98,25 @@ export function FilterForm({
 
       <div className="filter-section">
         <h4 className="section-title">Price Range</h4>
+        <label htmlFor="minPrice"></label>
         <div className="price-inputs">
           <input
             type="number"
             id="minPrice"
+            aria-label="minPrice"
             placeholder="Min"
+
             className="price-input"
             onChange={(e) => handleDebouceInputChange('minPrice', Number(e.target.value))}
             defaultValue={formState.minPrice || ''}
           />
           <span className="price-separator">to</span>
+          <label htmlFor="maxPrice"></label>
           <input
             type="number"
             id="maxPrice"
+            aria-label="maxPrice"
+
             placeholder="Max"
             className="price-input"
             onChange={(e) => handleDebouceInputChange('maxPrice', Number(e.target.value))}
@@ -120,15 +126,16 @@ export function FilterForm({
       </div>
 
       <div className="filter-section">
-        <h4 className="section-title">Sort By</h4>
+        <label htmlFor="sortBy" className="section-title">Sort By</label>
         <select
+          name="sortBy"
           id="sortBy"
           className="select-input"
           onChange={(e) => handleInputChange('sortBy', e.target.value)}
           value={formState.sortBy}
         >
-          <option value="listedDate_desc">Latest</option>
           <option value="listedDate_asc">Earliest</option>
+          <option value="listedDate_desc">Latest</option>
           <option value="price_asc">Price: Low to High</option>
           <option value="price_desc">Price: High to Low</option>
           <option value="title_asc">Title (A-Z)</option>

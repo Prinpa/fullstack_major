@@ -50,51 +50,50 @@ export default function Login() {
       [name]: value
     }));
   };
-
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+    <div className="login-container">
+      <h2 className="login-title">Login</h2>
       {loginError && (
-        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+        <div className="login-error">
           {loginError}
         </div>
       )}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">Email</label>
           <input
             type="email"
             name="email"
             aria-label='email'
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-lg"
+            className="form-input"
           />
           {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            <p className="form-error">{errors.email}</p>
           )}
         </div>
 
-        <div>
-          <label htmlFor='password' className="block text-sm font-medium mb-1">Password</label>
+        <div className="form-group">
+          <label htmlFor='password' className="form-label">Password</label>
           <input
             type="password"
             name="password"
             aria-label='password'
             value={formData.password}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-lg"
+            className="form-input"
           />
           {errors.password && (
-            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            <p className="form-error">{errors.password}</p>
           )}
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          className="login-button"
           role="button"
         >
-          Login
+          Log in
         </button>
       </form>
     </div>

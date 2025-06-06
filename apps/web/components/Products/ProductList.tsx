@@ -23,8 +23,8 @@ export function ProductList({ initialProducts }: ProductListProps) {
       />
       <div className="product-grid">
         {products.map((product: Product) => (
-          <Link href={`/product/${product.id}`} key={product.id} className="product-card">
-            <div className="product-image">
+          <Link aria-label="productCard" href={`/product/${product.id}`} key={product.id} className="product-card" data-testid={`product-${product.id}`}>
+            <div className="product-image" >
               <Image
                 src={product.imageUrl || "https://25dikzmikm3htwyx.public.blob.vercel-storage.com/products/clown-cMVZhEWtDCLR4TXJYbbo6O0smIuHIL.jpg"}
                 width={300}

@@ -11,11 +11,18 @@ export default async function page() {
   let cart = [];
   if (token) {
     cart = await getCartByUserId(token);
-  }
-  return (
-   <AppLayout>
-      {userData.role === "guest" ? <div>Please log in to view your cart</div> : <CartList cart={cart} />}
-      <PaymentFrom/>
-   </AppLayout>
+  }  return (
+    <AppLayout>
+      {userData.role === "guest" ? (
+        <div className="flex justify-center items-center min-h-[60vh] text-lg text-gray-600">
+          You need to be logged in to have a cart
+        </div>
+      ) : (
+        <div className="cart-container">
+          <CartList cart={cart} />
+          <PaymentFrom />
+        </div>
+      )}
+    </AppLayout>
   );
 }
