@@ -91,7 +91,7 @@ export async function PUT(
         }
 
         const product = await prisma.products.update({
-            where: { id: 8 },
+            where: { id: Number(id) },
             data: productHolder,
         });
 

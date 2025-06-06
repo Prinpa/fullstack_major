@@ -14,7 +14,7 @@ test.describe('yes its all test files in one im sorry', () => {
     await expect(page.getByText("nexus")).toBeVisible();
   })
 
-  test("Test auth flow",{tag: "@auth"}, async ({ userPage }) => {
+  test("Test user flow",{tag: "@auth"}, async ({ userPage }) => {
     // Sign up
     await userPage.goto('http://localhost:3000/signUp');
     await userPage.getByLabel("firstName").fill("Test");
@@ -36,16 +36,37 @@ test.describe('yes its all test files in one im sorry', () => {
     
     // Wait for login to complete and verify we're logged in
     await userPage.waitForURL('http://localhost:3000');
+
+
+    // Save the authentication state for future tests
+    await userPage.context().storageState({ path: '.auth/user.json' });
+    // Verify we're logged in by checking for admin-only content
+    await expect(userPage.getByText("Hello, test")).toBeVisible();
+  });
+
+  test("Test admin flow",{tag: "@auth"}, async ({ adminPage }) => {
+    await adminPage.goto('http://localhost:3000/login');
+
+    
+    // Login
+    await adminPage.getByLabel("Email").fill("admin@gmail.com");
+    await adminPage.getByLabel("Password").fill("password");
+    await adminPage.getByRole("button", { name: "Log in" }).click();
+    
+    // Wait for login to complete and verify we're logged in
+    await adminPage.waitForURL('http://localhost:3000');
     
     // Get and log the cookies to verify authentication
 
 
     // Save the authentication state for future tests
-    await userPage.context().storageState({ path: '.auth/user.json' });
-    console.log("Authentication state saved to .auth/user.json");
+    await adminPage.context().storageState({ path: '.auth/admin.json' });
     // Verify we're logged in by checking for admin-only content
-    await expect(userPage.getByText("Nexus")).toBeVisible();
+    const cookies = await adminPage.context().cookies();
+    console.log("Admin cookies:", cookies);
+    await expect(adminPage.getByText("Hello, admin")).toBeVisible();
   });
+
 
   test("Is authenticated", async ({ userPage }) => {
     await userPage.goto('http://localhost:3000');
@@ -203,7 +224,7 @@ test.describe('yes its all test files in one im sorry', () => {
     expect(total).toBeCloseTo(price, 2);
   });
 
-  test("User can complete checkout", {tag: "@auth"},  async ({ userPage }) => {
+  test("User can complete checkout",  async ({ userPage }) => {
     // First add an item to cart
     await userPage.goto(`http://localhost:3000/product/${products[0].id}`);
     await userPage.getByRole('button', { name: 'Add To Cart' }).click();
@@ -230,4 +251,65 @@ test.describe('yes its all test files in one im sorry', () => {
     await expect(userPage.locator('.order-card')).toBeVisible();
   });
 
-})    
+  test("Admin can add a new product", {tag: "@auth"}, async ({ adminPage }) => {
+    // Navigate to add product page
+    await adminPage.goto(`http://localhost:3000/product/add-product`);
+    // print cookies
+    const cookies = await adminPage.context().cookies();
+    console.log("Admin cookies:", cookies);
+
+    // Fill in the product details
+    await adminPage.getByLabel('Title').fill('Test Product');
+    await adminPage.getByLabel('Content').fill('This is a test product content');
+    await adminPage.getByLabel('category').fill('This is a test product category');
+    await adminPage.getByLabel('Description').fill('This is a test product description');
+    await adminPage.getByLabel('Price').fill('199.99');
+    await adminPage.getByLabel('Quantity').fill('50');
+    
+    // Submit the form
+    await adminPage.getByRole('button', { name: 'Submit' }).click();
+    
+    // Wait for navigation and check if product appears in the list
+    await adminPage.waitForURL('http://localhost:3000');
+
+    await expect(adminPage.getByText('Test Product', {exact: true})).toBeVisible();
+    await expect(adminPage.getByText('$199.99')).toBeVisible();
+
+  });
+
+  test("Admin can update a product", async ({ adminPage }) => {
+    // Navigate to the first product's detail page
+    await adminPage.goto(`http://localhost:3000/product/${products[0].id}`);
+    
+    
+    // Update product details
+    const titleInput = adminPage.getByLabel('Title');
+    await titleInput.clear();
+    await titleInput.fill('Updated Product Title');
+    
+    const contentInput = adminPage.getByLabel('Content');
+    await contentInput.clear();
+    await contentInput.fill('Updated product description');
+    
+    const priceInput = adminPage.getByLabel('Price');
+    await priceInput.clear();
+    await priceInput.fill('299.99');
+    
+    const quantityInput = adminPage.getByLabel('Quantity');
+    await quantityInput.clear();
+    await quantityInput.fill('75');
+    
+    // Save changes
+    await adminPage.getByRole('button', { name: 'Submit' }).click();
+
+    await adminPage.waitForURL('http://localhost:3000');
+
+    
+    // Verify updates are visible
+    await expect(adminPage.getByText('Updated Product Title')).toBeVisible();
+    await expect(adminPage.getByText('$299.99')).toBeVisible();
+    await expect(adminPage.getByText('Updated product description')).toBeVisible();
+    await expect(adminPage.getByText('In stock: 75')).toBeVisible();
+  });
+
+});

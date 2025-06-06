@@ -75,7 +75,7 @@ export function AddProductForm({ product }: { product?: Product }) {
     formData.append("title", formState.title);
     formData.append("content", formState.content);
     formData.append("description", formState.description);
-    formData.append("price", formState.price.toString());
+    formData.append("price", (formState.price * 100).toString());
     formData.append("quantity", formState.quantity.toString());
     formData.append("category", formState.category);
     formData.append("sold", formState.sold.toString());
@@ -106,6 +106,7 @@ export function AddProductForm({ product }: { product?: Product }) {
     });
     setImageFile(null);
     setImagePreview(null);
+    window.location.href = "/"
   };
 
   return (
@@ -118,6 +119,7 @@ export function AddProductForm({ product }: { product?: Product }) {
           type="text"
           id="title"
           name="title"
+          aria-label="title"
           value={formState.title}
           onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -132,6 +134,8 @@ export function AddProductForm({ product }: { product?: Product }) {
         <textarea
           id="description"
           name="description"
+          aria-label="description"
+
           value={formState.description}
           onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -146,6 +150,8 @@ export function AddProductForm({ product }: { product?: Product }) {
         <textarea
           id="content"
           name="content"
+          aria-label="content"
+
           value={formState.content}
           onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -238,6 +244,7 @@ export function AddProductForm({ product }: { product?: Product }) {
           type="text"
           id="category"
           name="category"
+          aria-label="category"
           value={formState.category}
           onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -271,6 +278,8 @@ export function AddProductForm({ product }: { product?: Product }) {
       <button
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        role="button"
+        name="Save Changes"
       >
         Submit
       </button>

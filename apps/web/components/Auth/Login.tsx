@@ -55,7 +55,7 @@ export default function Login() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+    <div className=" h-fit mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
       {loginError && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">

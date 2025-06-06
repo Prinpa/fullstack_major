@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "token",
-      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjg4LCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImZpcnN0TmFtZSI6IlRlc3QiLCJpYXQiOjE3NDkyMDc5NzQsImV4cCI6MTc0OTIxMTUxNH0.EthJ3L_Q5jqxPXXJe2NZEpsj8jsPtiQF4Z2ZQD-SaqI",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE3NSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJmaXJzdE5hbWUiOiJhZG1pbiIsImlhdCI6MTc0OTIxNzExNiwiZXhwIjoxNzQ5MjIwNjU2fQ.fsE8moAfK8Q0NPEI4g2mjc4eLjsTGi_DP8i8P-NSmb8",
       "domain": "localhost",
       "path": "/",
-      "expires": 1749211514.1316,
+      "expires": 1749220656.817536,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "refresh",
-      "value": "rf_oialszjsn79",
+      "value": "rf_q2p6r1e8dyo",
       "domain": "localhost",
       "path": "/",
-      "expires": 1749812774.132175,
+      "expires": 1749821916.817619,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"

@@ -28,7 +28,8 @@ export async function setOptions(
 }
 
 export * from "@playwright/test";
-export const test = base.extend<MyFixtures>({  userPage: async ({ browser }, use) => {
+export const test = base.extend<MyFixtures>({
+  userPage: async ({ browser }, use) => {
     const context = await browser.newContext({
       storageState: ".auth/user.json",
     });
@@ -36,13 +37,12 @@ export const test = base.extend<MyFixtures>({  userPage: async ({ browser }, use
     await use(userPage);
     await context.close();
   },
-});
-export const test2 = base.extend<MyFixtures>({  adminPage: async ({ browser }, use) => {
+  adminPage: async ({ browser }, use) => {
     const context = await browser.newContext({
       storageState: ".auth/admin.json",
     });
     const adminPage = await context.newPage();
     await use(adminPage);
     await context.close();
-  },
+  }
 });

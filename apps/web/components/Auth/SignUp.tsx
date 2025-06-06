@@ -60,7 +60,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex bg-gray-50 px-4">
+    <div className="flex bg-gray-50 px-4 items-center justify-center">
       <div className=" p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Create Account</h2>
         <form onSubmit={handleSubmit} className="w-full space-y-4">

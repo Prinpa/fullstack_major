@@ -4,12 +4,21 @@ export async function seed() {
   const client = createClient();
   console.log("Seeding database...");
   // drop all tables using prisma orm
+  await client.orders.deleteMany();
   await client.cart.deleteMany();
   await client.products.deleteMany();
-  await client.orders.deleteMany();
   await client.refreshTokens.deleteMany();
   await client.user.deleteMany();
 
+  await client.user.create({
+    data: {
+        firstName: "admin",
+        lastName:  "admin",
+        email:    "admin@gmail.com",
+        password: "password",
+        role:  "admin"
+      }
+    })
   // add 3 products
   await client.products.createMany({
     data: [

@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     }
 
     const formData = await request.formData();
-
+    console.log("here", formData.get("price"))
     // Extract product fields
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;

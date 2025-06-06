@@ -37,7 +37,9 @@ export function ProductList({ initialProducts }: ProductListProps) {
             <div className="product-info">
               <div className="product-title-price">
                 <h2 className="product-title">{product.title}</h2>
-                <p className="product-price">${product.price.toFixed(2)}</p>
+                <p className="product-price">${(product.price / 100).toFixed(2)}</p>
+                
+
               </div>
               <div className="product-extra">
                 <p className="product-content">{product.content}</p>

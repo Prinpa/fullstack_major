@@ -1,84 +1,59 @@
-# Turborepo starter
+# Full Stack Major Project
 
-This Turborepo starter is maintained by the Turborepo core team.
+A monorepo built with Turborepo containing a Next.js web application with supporting packages.
 
-## Using this example
+## Project Structure
 
-Run the following command:
+The project is organized as a monorepo with the following structure:
 
+**Applications**
+- `apps/web` - Next.js web application
+
+**Packages**
+- `packages/db` - Database handling with Prisma and Neon
+- `packages/env` - Environment configuration 
+- `packages/eslint-config` - Shared ESLint configuration
+- `packages/typescript-config` - Shared TypeScript configuration
+- `packages/ui` - Shared UI components
+- `packages/utils` - Shared utility functions
+
+**Tests**
+- `tests/playwright` - End-to-end tests using Playwright
+
+## Prerequisites
+
+- Node.js >= 18
+- pnpm 9.0.0
+
+## Getting Started
+
+1. Install dependencies:
 ```sh
-npx create-turbo@latest
+pnpm install
 ```
 
-## What's inside?
+2. Set up environment variables:
+   - Copy `.env.example` files in `apps/web` and `packages/db` to `.env`
+   - Configure the environment variables as needed
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
+3. Start the development server:
+```sh
 pnpm dev
 ```
 
-### Remote Caching
+## Available Scripts
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+- `pnpm dev` - Start development servers
+- `pnpm build` - Build all applications and packages
+- `pnpm lint` - Run linting
+- `pnpm format` - Format code with Prettier
+- `pnpm check-types` - Run TypeScript type checking
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## Technology Stack
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- **Framework:** Next.js 15
+- **Database:** Prisma with Neon Database
+- **Styling:** TailwindCSS
+- **Testing:** Playwright
+- **Package Management:** pnpm
+- **Build System:** Turborepo
