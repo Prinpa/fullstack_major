@@ -27,6 +27,7 @@ model products {
   sold  Boolean  @default(false)
   active  Boolean  @default(true)
   deletedAt DateTime?
+  orders orders[]
 }
 
 // user model contain id, first name, last name, email, password
@@ -64,5 +65,6 @@ model orders {
   quantity  Int
   price     Int
   createdAt DateTime @default(now())
+  product   products @relation(fields: [productId], references: [id])
 }
 

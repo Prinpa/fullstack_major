@@ -65,6 +65,5 @@ export async function getOrders() {
         },
     });
     const data = await response.json();
-    console.log("Orders Data:", data);
     return data ?? [];
 }

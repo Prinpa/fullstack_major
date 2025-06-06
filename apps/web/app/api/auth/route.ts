@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import { createClient } from "../../../../../packages/db/client";
 import { compare } from "bcrypt";
@@ -7,7 +7,7 @@ import { headers } from "next/headers";
 
 const prisma = createClient();
 // get
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
     const headersList = await headers();
     const authorization = headersList.get("Authorization");
     
@@ -41,7 +41,7 @@ export async function GET(request: Request) {
 }
 
 // either log in ot create user
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const { firstName, lastName, email, password } = await request.json();
 
