@@ -27,7 +27,6 @@ export async function GET(request: NextRequest) {
         console.log("No token found in authorization header");
         return NextResponse.json({ message: "No token provided" }, { status: 401 });
     }
-
     try {
         const decoded = jwt.verify(token, env.JWT_SECRET);
         return NextResponse.json({ 

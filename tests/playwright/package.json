@@ -1,5 +1,5 @@
 {
-  "name": "tests",
+  "name": "playwright",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,12 +10,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.52.0",
     "@types/node": "^22.15.30",
-    "vitest": "^3.2.2",
-    "zod": "^3.23.8"
+    "dotenv": "^16.5.0"
   },
   "dependencies": {
-    "@types/jsonwebtoken": "^9.0.9"
+    "@repo/db": "workspace:*",
+    "@repo/env": "workspace:*",
+    "@types/jsonwebtoken": "^9.0.9",
+    "jsonwebtoken": "^9.0.2"
   }
 }

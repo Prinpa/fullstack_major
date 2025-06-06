@@ -53,7 +53,7 @@ export default function Login() {
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Sign in</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
       {loginError && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
           {loginError}
@@ -61,10 +61,11 @@ export default function Login() {
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-1">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
           <input
             type="email"
             name="email"
+            aria-label='email'
             value={formData.email}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
@@ -75,10 +76,11 @@ export default function Login() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Password</label>
+          <label htmlFor='password' className="block text-sm font-medium mb-1">Password</label>
           <input
             type="password"
             name="password"
+            aria-label='password'
             value={formData.password}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-lg"
@@ -90,8 +92,9 @@ export default function Login() {
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          role="button"
         >
-          Sign In
+          Login
         </button>
       </form>
     </div>

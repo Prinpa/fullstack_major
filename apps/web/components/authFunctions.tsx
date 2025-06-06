@@ -34,6 +34,8 @@ export async function getUserData() {
 }
 // add user
 export async function addUser(formData: CreateUserData) {
+  console.log("Add user response:");
+
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
   const url = new URL('/api/auth', baseUrl);
   const response = await fetch(url.toString(), {
