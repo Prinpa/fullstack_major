@@ -16,9 +16,7 @@ export async function GET(request: NextRequest) {
     if (typeof userData === "string") {
       return NextResponse.json({ message: userData }, { status: 401 });
     }
-    if (!userData || userData.role !== "admin") {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
+
     let orders;
     // if the users role is not admin, return only their orders
     if (userData.role !== "admin") {
