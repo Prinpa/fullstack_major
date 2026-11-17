@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
     // Group orders by orderId
     const groupedOrders = Object.values(
       orders.reduce(
-        (acc, order) => {
+        (acc: any, order: any) => {
           const { orderId, userId, createdAt, ...item } = order;
           if (!acc[orderId]) {
             acc[orderId] = {
