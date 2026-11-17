@@ -7,7 +7,6 @@ interface OrderListProps {
 }
 
 export function OrderList({ orders }: OrderListProps) {
-  console.log("Orders in OrderList:", orders);
 
   if (!orders || orders.length === 0) {
     return <div className="order-empty">No orders found.</div>;

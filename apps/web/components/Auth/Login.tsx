@@ -32,10 +32,10 @@ export default function Login() {
       try {
         const response = await loginUser(formData);
         if (!response.ok) {
+          // todo: not this
           console.log("Login response:", response.message);
         }
         window.location.href = '/';
-        // The redirect will be handled in loginUser function
       } catch (error) {
         if (error instanceof Error) {
           setLoginError(error.message);

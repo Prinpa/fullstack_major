@@ -32,9 +32,16 @@ The project is organized as a monorepo with the following structure:
 pnpm install
 ```
 
+
+
 2. Set up environment variables:
    - Copy `.env.example` files in `apps/web` and `packages/db` to `.env`
    - Configure the environment variables as needed
+
+3 set up prisma
+cd packages/db
+pnpm prisma generate
+
 
 3. Start the development server:
 ```sh

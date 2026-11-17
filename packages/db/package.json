@@ -15,16 +15,15 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
     "@prisma/adapter-neon": "^6.9.0",
-    "@prisma/client": "^6.9.0",
+    "@prisma/client": "^7.4.2",
     "ws": "^8.18.2"
   },
   "devDependencies": {
     "@types/ws": "^8.18.1",
-    "prisma": "^6.9.0"
+    "prisma": "^7.4.2"
   },
   "exports": {
     "./seed": "./seed.ts",
     "./client": "./client.ts"
-
   }
 }

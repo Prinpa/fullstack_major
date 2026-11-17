@@ -19,11 +19,12 @@ export function ProductDetail({ product }: { product: Product }) {
 
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(e.target.value);
-        if (value >= 1) {
+        if (value >= 1 && value <= product.quantity) {
             setQuantity(value);
+        } else if (value > product.quantity) {
+            setQuantity(product.quantity);
         }
     };
-    console.log("Product Detail:", product);
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -42,7 +43,7 @@ export function ProductDetail({ product }: { product: Product }) {
                 <div className="flex flex-col space-y-6">
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.title}</h1>
-                        <p className="text-2xl font-semibold text-gray-700 mb-4">${product.price.toFixed(2)}</p>
+                        <p className="text-2xl font-semibold text-gray-700 mb-4">${(product.price / 100).toFixed(2)}</p>
                         <div className="prose prose-sm text-gray-600">
                             <p>{product.content}</p>
                         </div>
@@ -79,9 +80,10 @@ export function ProductDetail({ product }: { product: Product }) {
                             </div>
                             <div className="w-full">
                                 <AddToCartButton
+                                    userId={userData.userId}
                                     productId={product.id}
                                     quantity={quantity}
-                                    price={product.price}
+                                    
                                 />
                             </div>
                         </div>

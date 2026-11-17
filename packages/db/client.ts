@@ -1,13 +1,12 @@
+import 'dotenv/config'; 
 import { PrismaClient } from '@prisma/client';
 import { neonConfig } from '@neondatabase/serverless';
-import WebSocket from 'ws';
-
-// Configure Neon for serverless environments
-neonConfig.webSocketConstructor = WebSocket;
+import { PrismaPg } from "@prisma/adapter-pg";
 
 declare global {
   var prisma: PrismaClient | undefined;
 }
+console.log("Prisma config - DATABASE_URL:", process.env.DATABASE_URL)
 
 export function createClient() {
   if (!global.prisma) {
@@ -15,7 +14,8 @@ export function createClient() {
     if (!connectionString) {
       throw new Error('DATABASE_URL is not set');
     }
-    global.prisma = new PrismaClient();
+    const adapter = new PrismaPg({ connectionString: connectionString });
+    global.prisma = new PrismaClient({ adapter });
   }
   return global.prisma;
 }

@@ -2,9 +2,9 @@
 import { addToCart } from "components/cartFunctions"
 import { getUserData } from "components/authFunctions";
 import { useState } from "react"
+import { Product } from "types";
 
-
-export function AddToCartButton( {productId, quantity, price}: {productId: number; quantity: number, price: number}) {
+export function AddToCartButton( {userId, productId, quantity}: {userId: number; productId: number; quantity: number}) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +21,7 @@ export function AddToCartButton( {productId, quantity, price}: {productId: numbe
         setError("Please login to add items to cart");
         return;
       }
-      await addToCart(productId, userData.userId, quantity, price);
+      await addToCart(userId, productId, quantity);
       // Optional: Add success feedback here
     } catch (err) {
       setError("Failed to add item to cart");

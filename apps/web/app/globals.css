@@ -538,6 +538,13 @@ body {
   background-color: #1d4ed8;
 }
 
+.test-fucker {
+  border: 1px solid black;
+  width: 20%;
+  height: 20px;
+  margin: 0 auto;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1024px) {
   .filter-sidebar {

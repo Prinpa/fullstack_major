@@ -8,7 +8,7 @@ export async function TopNav() {
   const userData = await getUserData();
     return (
     <nav className="navbar">
-      <Link href={"/"} className="home-button">Nexus</Link>
+      <Link href={"/"} className="home-button">Prinpa store</Link>
       
       <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
         {userData.role === "guest" ? (

@@ -4,12 +4,18 @@
     "plugins": [
       {
         "name": "next"
-      }
+      },
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./app/*", "./components/*"]
+    },
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2023",
+    "strict": true,
+    "esModuleInterop": true,
+    "ignoreDeprecations": "6.0"
   },
   "include": [
     "**/*.ts",

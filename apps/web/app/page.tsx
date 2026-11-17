@@ -4,7 +4,6 @@ import { ProductList } from "components/Products/ProductList";
 
 export default async function Home() {
     const initialProducts = await getProducts();
-
     return (
         <AppLayout>
             <ProductList initialProducts={initialProducts} />

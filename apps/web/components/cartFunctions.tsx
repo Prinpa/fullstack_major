@@ -1,12 +1,12 @@
 import { getUserData } from "./authFunctions";
 import { getToken } from "./tokenFunctions";
-import { CartItem } from "types";
+import { CartItem, Product } from "types";
 
 export async function addToCart(
+    userId: number,
     productId: number,
-    userId: string,
     quantity: number,
-    price: number
+
 ) {
     const token = await getToken();
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
@@ -17,7 +17,7 @@ export async function addToCart(
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ productId, userId, quantity, price }),
+        body: JSON.stringify({userId, productId, quantity }),
     });
     const data = await response.json();
     return data.data;

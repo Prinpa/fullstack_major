@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { CreateUserData } from 'types';
 //import { useRouter } from 'next/navigation';
-import { addUser } from 'components/authFunctions';
+import { addUser, loginUser } from 'components/authFunctions';
+import router from 'next/dist/shared/lib/router/router';
 
 export default function SignUp() {
   //const router = useRouter();
@@ -43,8 +44,10 @@ export default function SignUp() {
     
     if (validateForm()) {
       try {
-        const response = addUser(formData);
-        //router.push('/login'); // Redirect to login page after successful signup
+        // todo handle this better
+        const addUserResponse = await addUser(formData);
+        const loginResponse = await loginUser({ email: formData.email, password: formData.password });
+        window.location.href = "/";
       } catch (error) {
         console.error('Signup error:', error);
       }
@@ -60,9 +63,9 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex bg-gray-50 px-4 items-center justify-center">
-      <div className=" p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Create Account</h2>
+    <div className="mx-auto">
+      <div className="mt-8 max-w-md rounded-lg bg-white p-6 shadow-md ">
+        <h2 className="mb-6 text-center text-2xl font-bold">Create Account</h2>
         <form onSubmit={handleSubmit} className="w-full space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>

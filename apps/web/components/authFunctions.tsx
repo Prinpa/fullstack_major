@@ -59,8 +59,9 @@ export async function loginUser(formData: LoginUserData) {  try {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({...formData}),
-      credentials: 'include', // This is important to include cookies
+      credentials: 'include',
     });
+    
     const data = await response.json();
     if (!response.ok) {
       throw new Error(data.error || 'Login failed');

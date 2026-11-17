@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     try {
         const { firstName, lastName, email, password } = await request.json();
 
-        // if no firstrname, create account
+        // if there is a first name, the user is trying to sign up
         if (firstName) {
             const test = await prisma.user.findUnique({
                 where: {
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
                 },
             });            
             
-            // Create response with JWT token
+            // Create response
             const response = NextResponse.json({
                 message: "Login successful",
                 user: {
