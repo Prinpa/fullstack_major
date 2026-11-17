@@ -6,6 +6,7 @@ export async function addToCart(
     userId: number,
     productId: number,
     quantity: number,
+    price: number,
 
 ) {
     const token = await getToken();
@@ -17,7 +18,7 @@ export async function addToCart(
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({userId, productId, quantity }),
+        body: JSON.stringify({userId, productId, quantity, price }),
     });
     const data = await response.json();
     return data.data;

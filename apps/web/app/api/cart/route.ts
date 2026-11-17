@@ -55,8 +55,7 @@ export async function POST(request: NextRequest) {
     try {
         const prisma = createClient();
         const body = await request.json();
-        const {userId, productId, quantity} = { ...body };
-        console.log("Received cart data:", { userId, productId, quantity });
+        const {userId, productId, quantity, price} = { ...body };
         const headersList = await headers();
         const authorization = headersList.get("Authorization");
         const token = authorization?.split(" ")[1];
@@ -75,30 +74,27 @@ export async function POST(request: NextRequest) {
                 { status: 403 }
             );
         }
-        console.log("1")
 
-        if (!productId || !userId || !quantity) {
+        if (!productId || !userId || !quantity || !price) {
             return NextResponse.json(
                 { message: "Missing product data" },
                 { status: 400 }
             );
         }
-        console.log("2")
-
         const cartItem = await prisma.cart.create({
             data: {
                 userId: userId,
                 productId: productId,
                 quantity: quantity,
+                price: price,
             },
         });
-        console.log("3")
-
         return NextResponse.json(
             { data: cartItem, message: "Cart updated successfully" },
             { status: 201 }
         );
     } catch (error) {
+        console.log(error)
         if (error instanceof jwt.JsonWebTokenError) {
             return NextResponse.json(
                 { message: "Invalid token" },

@@ -6,7 +6,6 @@ import { PrismaPg } from "@prisma/adapter-pg";
 declare global {
   var prisma: PrismaClient | undefined;
 }
-console.log("Prisma config - DATABASE_URL:", process.env.DATABASE_URL)
 
 export function createClient() {
   if (!global.prisma) {

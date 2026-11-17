@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
     }
     // Create orders with the same orderId for all items
     const order = await prisma.orders.createMany({
-      data: cart.map((item: CartItem) => ({
+      data: cart.map((item: any) => ({
         orderId: orderId,
         userId: userData.userId,
         productId: item.productId,

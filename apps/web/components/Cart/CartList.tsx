@@ -13,14 +13,18 @@ export async function CartList({
       </div>
     );
   }
-  console.log("Cart List:", cart);
+  console.log(
+  "Cart Products:",
+  cart.map((item) => item.product)
+);
   return (
     <div className="cart-items">
-      {cart.map((item: ReturnedOrderItem) => (
+      {cart.map((item: ReturnedOrderItem) => ( 
+        
         <div key={item.productId} className="cart-item">
           <img 
             src={item.product?.imageUrl } 
-            alt={item.product?.title || "Product"} 
+            alt={item.product?.title || "Product image"} 
             className="cart-item-image"
           />          <div className="cart-item-details">
             <h3 className="cart-item-title" data-testid="cart-item-title">{item.product?.title}</h3>

@@ -11,7 +11,6 @@ export default async function page() {
   let cart = [];
   if (token) {
     cart = await getCartByUserId(token);
-    console.log("Cart data:", cart);
   }  return (
     <AppLayout>
       {userData.role === "guest" ? (

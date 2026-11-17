@@ -83,6 +83,7 @@ export function ProductDetail({ product }: { product: Product }) {
                                     userId={userData.userId}
                                     productId={product.id}
                                     quantity={quantity}
+                                    price={product.price}
                                     
                                 />
                             </div>
